@@ -27,8 +27,11 @@ object Sindy {
       .groupBy("_2")
       .agg(array_distinct(flatten(collect_set("collect_set(_1)"))))
       .select("array_distinct(flatten(collect_set(collect_set(_1))))")
-      //.flatMap(row => row.getList(0).stream().map(colName => ))
-      .show(100, truncate = false)
+      .flatMap(row => {
+        row.getList[String](0).stream().map[Tuple2[String, List[String]]]((item: String) => (item, row.getList[String](0)))
+          .collect()
+      })
+      //.show(100, truncate = false)
 
   }
 }
