@@ -31,8 +31,11 @@ object Sindy {
         val list = row.getAs[Seq[String]](0)
         list.map(item => {
           (item, list.filter(item2 => item2.toString != item.toString))
-          })
         })
+        })
+      .rdd
+      .reduceByKey((first, second) => first.intersect(second))
+      .toDF()
       .show(100, truncate = false)
   }
 }
