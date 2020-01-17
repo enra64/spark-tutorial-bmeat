@@ -36,6 +36,11 @@ object Sindy {
       .rdd
       .reduceByKey((first, second) => first.intersect(second))
       .toDF()
-      .show(100, truncate = false)
+      .filter(row => row.getAs[Seq[String]](1).nonEmpty)
+      .flatMap(row => {
+        row.getAs[Seq[String]](1).map(item => (row.getAs[String](0), item))
+      })
+      .toDF()
+      .foreach(row => println(row.getAs[String](0) + " < " + row.getAs[String](1)))
   }
 }
