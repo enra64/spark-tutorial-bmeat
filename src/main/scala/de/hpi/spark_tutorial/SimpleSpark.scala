@@ -86,8 +86,8 @@ object SimpleSpark extends App {
     //------------------------------------------------------------------------------------------------------------------
     // Inclusion Dependency Discovery (Homework)
     //------------------------------------------------------------------------------------------------------------------
-    //val inputs = getListOfFiles("./TPCH/").map(file => file.getAbsolutePath)
-    val inputs = List("./TPCH/tpch_nation.csv", "./TPCH/tpch_region.csv")
+    //val inputs = List("./TPCH/tpch_nation.csv", "./TPCH/tpch_region.csv")
+    val inputs = List("./PAPENBROCK/artists.csv", "./PAPENBROCK/tracks.csv")
     time {Sindy.discoverINDs(inputs, spark)}
   }
 }
