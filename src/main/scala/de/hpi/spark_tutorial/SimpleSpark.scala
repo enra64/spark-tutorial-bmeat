@@ -2,7 +2,7 @@ package de.hpi.spark_tutorial
 
 import java.io.File
 
-import org.apache.spark.sql.{SparkSession}
+import org.apache.spark.sql.SparkSession
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
 
@@ -20,7 +20,6 @@ object SimpleSpark extends App {
 
     @scala.annotation.tailrec
     def nextOption(map : OptionMap, list: List[String]) : OptionMap = {
-      def isSwitch(s : String) = (s(0) == '-')
       list match {
         case Nil => map
         case "--path" :: value :: tail =>
@@ -68,7 +67,7 @@ object SimpleSpark extends App {
       val t0 = System.currentTimeMillis()
       val result = block
       val t1 = System.currentTimeMillis()
-      println(s"Execution: ${t1 - t0} ms")
+      //println(s"Execution: ${t1 - t0} ms")
       result
     }
 
