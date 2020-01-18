@@ -1,6 +1,6 @@
 package de.hpi.spark_tutorial
 
-import org.apache.spark.sql.types.StringType
+import scala.math.Ordering.Implicits._
 import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 import org.apache.spark.sql.functions._
 
@@ -36,7 +36,7 @@ object Sindy {
       .reduceByKey((first, second) => first.intersect(second))
       .toDF()
       .filter(row => row.getAs[Seq[String]](1).nonEmpty)
-      .sort(asc("_1"))
-      .foreach(row => println(row.getAs[String](0) + " < " + row.getAs[List[String]](1).mkString(",")))
+      .sort()
+      .foreach(row => println(row.getAs[String](0) + " < " + row.getAs[Seq[String]](1).sorted.mkString(",")))
   }
 }
