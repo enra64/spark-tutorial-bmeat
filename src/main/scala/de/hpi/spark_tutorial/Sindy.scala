@@ -36,7 +36,9 @@ object Sindy {
       .reduceByKey((first, second) => first.intersect(second))
       .toDF()
       .filter(row => row.getAs[Seq[String]](1).nonEmpty)
-      .sort()
+      .sort($"_1".asc)
+      .collect()
       .foreach(row => println(row.getAs[String](0) + " < " + row.getAs[Seq[String]](1).sorted.mkString(",")))
+      //.show(10, false)
   }
 }
