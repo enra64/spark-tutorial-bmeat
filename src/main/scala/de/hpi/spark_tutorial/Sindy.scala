@@ -23,7 +23,6 @@ object Sindy {
             .agg(collect_set("_1"))
       )
       .reduce(_.union(_))
-      //.show(100, truncate = false)
       .groupBy("_2")
       .agg(array_distinct(flatten(collect_set("collect_set(_1)"))))
       .select("array_distinct(flatten(collect_set(collect_set(_1))))")
@@ -37,10 +36,7 @@ object Sindy {
       .reduceByKey((first, second) => first.intersect(second))
       .toDF()
       .filter(row => row.getAs[Seq[String]](1).nonEmpty)
-      .flatMap(row => {
-        row.getAs[Seq[String]](1).map(item => (row.getAs[String](0), item))
-      })
-      .toDF()
-      .foreach(row => println(row.getAs[String](0) + " < " + row.getAs[String](1)))
+      .sort(asc("_1"))
+      .foreach(row => println(row.getAs[String](0) + " < " + row.getAs[List[String]](1).mkString(",")))
   }
 }
