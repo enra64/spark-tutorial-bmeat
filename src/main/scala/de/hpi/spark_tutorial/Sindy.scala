@@ -10,7 +10,7 @@ object Sindy {
   def discoverINDs(inputs: List[String], spark: SparkSession): Unit = {
     import spark.implicits._
 
-    val df: Unit = inputs.map(input => spark.read
+    inputs.map(input => spark.read
       .option("inferSchema", "true")
       .option("header", "true")
       .option("delimiter", ";")
@@ -31,7 +31,7 @@ object Sindy {
         list.map(item => {
           (item, list.filter(item2 => item2.toString != item.toString))
         })
-        })
+      })
       .rdd
       .reduceByKey((first, second) => first.intersect(second))
       .toDF()
@@ -39,6 +39,5 @@ object Sindy {
       .sort($"_1".asc)
       .collect()
       .foreach(row => println(row.getAs[String](0) + " < " + row.getAs[Seq[String]](1).sorted.mkString(",")))
-      //.show(10, false)
   }
 }
