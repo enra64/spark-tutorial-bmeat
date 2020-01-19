@@ -7,14 +7,14 @@ import org.apache.log4j.Logger
 import org.apache.log4j.Level
 
 object SimpleSpark extends App {
-  val usage = """
-    Usage: java -jar sindy.jar --path TPCH --cores 4 must work.
-  """
 
   // https://stackoverflow.com/questions/2315912/best-way-to-parse-command-line-parameters
   def parseArgs(args: Array[String]) = {
 
-    if (args.length == 0) println(usage)
+    //val usage = """
+    //Usage: java -jar sindy.jar --path TPCH --cores 4 must work.
+    //"""
+    //if (args.length == 0) println(usage)
     val arglist = args.toList
     type OptionMap = Map[Symbol, String]
 
@@ -67,7 +67,7 @@ object SimpleSpark extends App {
       val t0 = System.currentTimeMillis()
       val result = block
       val t1 = System.currentTimeMillis()
-      //println(s"Execution: ${t1 - t0} ms")
+      println(s"Execution: ${t1 - t0} ms")
       result
     }
 
@@ -80,6 +80,7 @@ object SimpleSpark extends App {
       }
     }
 
-    time {Sindy.discoverINDs(getListOfFiles(data_set_path), spark)}
+    // time {Sindy.discoverINDs(getListOfFiles(data_set_path), spark)}
+    Sindy.discoverINDs(getListOfFiles(data_set_path), spark)
   }
 }
